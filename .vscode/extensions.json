@@ -1,0 +1,18 @@
+{
+  "recommendations": [
+    "streetsidesoftware.code-spell-checker",
+    "dbaeumer.vscode-eslint",
+    "davidanson.vscode-markdownlint",
+
+    "eamodio.gitlens",
+    "xyz.local-history",
+
+    "editorconfig.editorconfig",
+
+    "ionutvmi.path-autocomplete",
+    "aaron-bond.better-comments",
+
+    "christian-kohler.npm-intellisense",
+    "axetroy.vscode-npm-import-package-version"
+  ]
+}
