@@ -6,66 +6,66 @@
   "jake.autoDetect": "off",
   "search.followSymlinks": false,
   "search.exclude": {
-    "node_modules": true,
-    ".history": true,
-    ".nyc_output": true,
-    "dist/": true,
-    "doc": true,
-    "coverage": true
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/.tsbuildinfo": true,
+    "**/.tsbuildinfo.*": true,
+    "**/.history": true,
+    "**/node_modules/**": true,
+    "**/node_modules*/**": true,
+    "**/dist/**": true,
+    "**/dist-docs/**": true
   },
   "files.autoSave": "afterDelay",
   "files.autoSaveDelay": 1500,
+  "files.insertFinalNewline": true,
+  "files.trimTrailingWhitespace": true,
+  "files.eol": "\n",
   "files.exclude": {
     "**/.git": true,
     "**/.DS_Store": true,
-    ".history": true,
-    ".nyc_output": true,
-    "node_modules": true
+    "**/.history": true,
+    "**/node_modules/**": true,
+    "**/node_modules*/**": true
   },
   "files.watcherExclude": {
     "**/.git/objects/**": true,
     "**/.git/subtree-cache/**": true,
-    ".history": true,
-    ".nyc_output": true,
-    "node_modules": true,
-    "dist": true,
-    "doc": true,
-    "coverage": true
+    "**/.history/**": true,
+    "**/node_modules/**": true,
+    "**/dist/**": true,
+    "**/dist-docs/**": true
   },
-  "cSpell.ignoreWords": [
-    "preversion",
-    "postversion",
-    "newversion",
-    "gitlab",
-    "cnpm",
-    "zhengxs",
-    "foxmail",
-    "docdash",
-    "buble",
-    "filesize",
-    "esnext",
-    "recurse",
-    "monospace",
-    "standardjs",
-    "rollupjs",
-    "repo",
-    "minification",
-    "editorconfig",
-    "eslintignore",
-    "gitignore"
-  ],
+  "editor.minimap.enabled": false,
+  "editor.codeActionsOnSave": {
+    "source.fixAll.eslint": true
+  },
+  "[javascript]": {
+    "editor.formatOnSave": false,
+  },
+  "[javascriptreact]": {
+    "editor.formatOnSave": false,
+  },
+  "[typescript]": {
+    "editor.formatOnSave": false,
+  },
+  "[typescriptreact]": {
+    "editor.formatOnSave": false,
+  },
   "cSpell.ignorePaths": [
-    "**/package-lock.json",
-    "**/node_modules/**",
-    "**/vscode-extension/**",
     "**/.git/**",
-    ".vscode",
+    "**/node_modules/**",
     ".history",
-    ".nyc_output",
-    "coverage",
+    ".vscode",
     "dist",
-    "doc",
-    "CHANGELOG.md"
+    "package-lock.json",
+    "yarn.lock"
   ],
-  "eslint.autoFixOnSave": true
+  "cSpell.ignoreWords": [
+  ],
+  "cSpell.words": [
+    "filesize",
+    "rollupjs",
+    "sourcemap"
+  ]
 }

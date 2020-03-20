@@ -16,20 +16,20 @@
 Project/
 ├── README.md
 ├── package.json
-├── rollup.config.js  
+├── rollup.config.js
 ├── babel.config.js
 ├── bundle-analyzer-report.html        构建分析报告
 ├── jsdoc.json                         自动生成 api 文档
 ├── .gitignore
 ├── .eslintrc.js                        代码检查
-├── .eslintignore                     
+├── .eslintignore
 ├── .editorconfig                       统一编辑器风格用的配置文件
 ├── coverage/                           测试覆盖率
 ├── dist/                               输出目录
 ├── dist-docs/                          文档输出目录
 ├── .vscode/                            vscode 编辑器配置目录
-├── src/                                
-|   ├── index.esm.js                    esm 输出用  
+├── src/
+|   ├── index.esm.js                    esm 输出用
 |   └── index.js                        cjs 和 umd 输出用
 └── test/
     ├── fixtures/
@@ -51,7 +51,7 @@ $ npm install
 $ npm run build
 
 # 构建用于生产的代码并生成包分析报告
-$ npm run build --report
+$ npm run build --analyse
 
 # 生成 API 文档.
 $ npm run build:docs

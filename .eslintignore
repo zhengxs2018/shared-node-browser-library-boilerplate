@@ -4,4 +4,8 @@ node_modules
 .history
 .vscode
 
-dist*
+dist/
+dist-docs/
+
+coverage/
+

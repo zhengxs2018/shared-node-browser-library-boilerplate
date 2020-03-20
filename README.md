@@ -18,7 +18,7 @@ Using rollup.js to build, a re-usable NPM module for run in nodejs and browser.
 Project/
 ├── README.md
 ├── package.json
-├── rollup.config.js  
+├── rollup.config.js
 ├── babel.config.js
 ├── bundle-analyzer-report.html
 ├── jsdoc.json
@@ -53,7 +53,7 @@ $ npm install
 $ npm run build
 
 # build for production and generate the bundle analyzer report
-$ npm run build --report
+$ npm run build --analyse
 
 # Generate API document.
 $ npm run build:docs

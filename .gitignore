@@ -3,7 +3,6 @@
 node_modules
 
 coverage
-.nyc_output
 
 # Log files
 npm-debug.log*
@@ -13,5 +12,6 @@ yarn-error.log*
 .idea
 .history/
 
-dist*
+dist/
+dist-docs/
 bundle-analyzer-report.html

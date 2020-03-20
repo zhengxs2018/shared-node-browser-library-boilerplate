@@ -8,7 +8,7 @@
  * 数组唯一性处理
 
  * @param {Array} values                                              需要操作的数组
- * @param {Function} [callback=(v, rightValues) => rightValues.some(rv => v === rv)]  使用 array.some 进行比较处理
+ * @param {Function} [compare=(value, arr) => arr.indexOf(value) > -1]  默认使用 [].indexOf 进行比较处理
  * @param {Boolean} [reverse=false]                                   是否逆转结果，用于获取重复的值
  *
  * @returns {Array}              处理结果
@@ -42,12 +42,12 @@
  * unique(values, compare, true)
  * // ['c', '1', 0, 1]
  */
-export function unique (values, callback, reverse = false) {
-  callback = callback || function compare (value, rightValues) {
-    return rightValues.some(rValue => value === rValue)
+export function unique(values, compare, reverse = false) {
+  if (typeof compare !== 'function') {
+    compare = (value, arr) => arr.indexOf(value) > -1
   }
   return values.filter((value, i) => {
-    let result = callback(value, values.slice(i + 1))
+    const result = compare(value, values.slice(i + 1))
     return reverse ? result : !result
   })
 }

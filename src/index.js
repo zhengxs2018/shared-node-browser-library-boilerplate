@@ -1,10 +1,7 @@
-import { unique } from './array'
+export { unique } from './array'
 
-import utils from './utils'
+export * as utils from './utils'
 
 export default {
-  version: '__VERSION__',
-
-  unique,
-  utils
+  version: '__VERSION__'
 }

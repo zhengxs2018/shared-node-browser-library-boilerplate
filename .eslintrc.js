@@ -3,15 +3,11 @@
 module.exports = {
   root: true,
   env: {
-    'shared-node-browser': true,
-    es6: true
+    es6: true,
+    node: true,
+    browser: true
   },
-  globals: {
-    __VERSION__: false
-  },
-  extends: [
-    'standard'
-  ],
+  extends: ["eslint:recommended", "plugin:prettier/recommended"],
   plugins: [
     'markdown'
   ],
@@ -19,8 +15,13 @@ module.exports = {
     'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
     'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
   },
+  parser: 'babel-eslint',
   parserOptions: {
-    parser: 'babel-eslint',
-    sourceType: 'module'
+    ecmaVersion: 9,
+    sourceType: 'module',
+    ecmaFeatures: {
+      generators: false,
+      objectLiteralDuplicateProperties: false
+    }
   }
 }
