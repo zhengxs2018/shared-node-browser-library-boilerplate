@@ -6,6 +6,10 @@ Using rollup.js to build, a re-usable NPM module for run in nodejs and browser.
 
 查看[中文文档](./README.zh-CN.md)
 
+## 关联文章
+
+* [开发一个适用于 nodejs 与浏览器的 npm 包 - 基于 rollupjs](https://juejin.im/post/6844903834402160647)
+
 ## Features
 
 - Use next javascript development.
