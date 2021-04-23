@@ -2,25 +2,15 @@ name: Node.js CI
 
 on:
   push:
-    branches:
+    branches-ignore:
       - main
+      - beta
       - next
     paths:
       - src/**/*
       - api-extractor.json
       - package.json
       - jest.config.js
-  pull_request:
-    branches:
-      - main
-      - dev
-      - 'feat/**'
-      - 'releases/**'
-    paths:
-      - src/**/*
-      - api-extractor.json
-      - jest.config.js
-      - package.json
 
 jobs:
   tests:
