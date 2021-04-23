@@ -34,6 +34,6 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: 12
-      - run: yarn publish
+      - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
