@@ -1,11 +1,18 @@
 name: Node.js Package
 
 on:
+  push:
+    branches:
+      - main
+      - next
+      - beta
+    tags:
+      - '**'
   pull_request:
     branches:
       - main
-    paths:
-      - 'src/**/*'
+      - next
+      - beta
     tags:
       - '**'
 
@@ -47,11 +54,23 @@ jobs:
       - name: Install dependencies
         run: yarn --frozen-lockfile
       - name: Publish to NPM
+        if: ${{ github.ref == 'refs/heads/main' }}
         run: yarn publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish to NPM --dist-tag=next
+        if: ${{ github.ref == 'refs/heads/next' }}
+        run: yarn publish --tag=next
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish to NPM --dist-tag=beta
+        if: ${{ github.ref == 'refs/heads/beta' }}
+        run: yarn publish --tag=beta
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
   docs:
+    if: ${{ github.ref == 'refs/heads/main' }}
     needs: publish
     runs-on: ubuntu-latest
     steps:
