@@ -20,6 +20,7 @@
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
     "preversion": "npm run lint && npm test && npm run build",
     "version": "npm run changelog",
+    "postversion": "git push --follow-tags",
     "prepublishOnly": "npm run build && npm run api"
   },
   "publishConfig": {
