@@ -13,7 +13,7 @@
     "format": "prettier --write \"**/*.{js,ts}\"",
     "test": "jest",
     "cov": "jest --coverage",
-    "ci": "npm run cov",
+    "ci": "jest --coverage ----coverageReporters=json",
     "api": "api-extractor run",
     "doc": "typedoc --options typedoc.js ./src",
     "commit": "cz",

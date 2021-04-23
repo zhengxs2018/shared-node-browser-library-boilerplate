@@ -22,6 +22,7 @@
   },
   "editor.minimap.enabled": false,
   "cSpell.words": [
+    "codecov",
     "sourcemap"
   ],
   "cSpell.ignoreWords": [
