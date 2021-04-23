@@ -1,5 +1,5 @@
 {
-  "name": "@zhengxs/npm-module-boilerplate",
+  "name": "@zhengxs2018/npm-module-boilerplate",
   "version": "0.1.0",
   "description": "Using rollup.js to build, a re-usable NPM module for run in nodejs and browser.",
   "main": "dist/index.js",
@@ -101,7 +101,7 @@
     "url": "https://github.com/zhengxs2018/shared-node-browser-library-boilerplate/issues"
   },
   "author": {
-    "name": "zhengxs",
+    "name": "zhengxs2018",
     "email": "zhengxs2018@foxmail.com"
   },
   "license": "MIT"
