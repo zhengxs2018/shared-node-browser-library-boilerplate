@@ -3,18 +3,17 @@ name: Node.js Package
 on:
   push:
     branches:
-      - main
       - next
       - beta
-    tags:
-      - '**'
+    paths:
+      - "src/**/*"
+      - package.json
   pull_request:
     branches:
       - main
-      - next
-      - beta
-    tags:
-      - '**'
+    paths:
+      - "src/**/*"
+      - package.json
 
 jobs:
   build:
