@@ -18,7 +18,7 @@
     "doc": "typedoc --options typedoc.js ./src",
     "commit": "cz",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
-    "preversion": "npm run lint && npm test && npm run build",
+    "preversion": "npm run lint && npm test",
     "version": "npm run changelog",
     "postversion": "git push --follow-tags",
     "prepublishOnly": "npm run build && npm run api"
