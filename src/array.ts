@@ -8,7 +8,6 @@ export type UniqueComparator<T> = (value: T, next: T[], index: number, result: T
 /**
  * 默认唯一性比较函数
  *
- * @private
  *
  * @param current - 当前比对项
  * @param array - 后续的所有项
