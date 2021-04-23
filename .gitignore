@@ -13,5 +13,5 @@ yarn-error.log*
 .history/
 
 dist/
-dist-docs/
-bundle-analyzer-report.html
+docs/
+temp/

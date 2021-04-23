@@ -1,20 +1,11 @@
 {
   "telemetry.enableCrashReporter": false,
   "telemetry.enableTelemetry": false,
-  "grunt.autoDetect": "off",
-  "gulp.autoDetect": "off",
-  "jake.autoDetect": "off",
   "search.followSymlinks": false,
   "search.exclude": {
-    "**/.git/objects/**": true,
-    "**/.git/subtree-cache/**": true,
-    "**/.tsbuildinfo": true,
-    "**/.tsbuildinfo.*": true,
     "**/.history": true,
-    "**/node_modules/**": true,
-    "**/node_modules*/**": true,
     "**/dist/**": true,
-    "**/dist-docs/**": true
+    "**/docs/**": true
   },
   "files.autoSave": "afterDelay",
   "files.autoSaveDelay": 1500,
@@ -22,50 +13,30 @@
   "files.trimTrailingWhitespace": true,
   "files.eol": "\n",
   "files.exclude": {
-    "**/.git": true,
-    "**/.DS_Store": true,
-    "**/.history": true,
-    "**/node_modules/**": true,
-    "**/node_modules*/**": true
+    "**/.history": true
   },
   "files.watcherExclude": {
-    "**/.git/objects/**": true,
-    "**/.git/subtree-cache/**": true,
     "**/.history/**": true,
-    "**/node_modules/**": true,
     "**/dist/**": true,
-    "**/dist-docs/**": true
+    "**/docs/**": true
   },
   "editor.minimap.enabled": false,
-  "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": true
-  },
-  "[javascript]": {
-    "editor.formatOnSave": false,
-  },
-  "[javascriptreact]": {
-    "editor.formatOnSave": false,
-  },
-  "[typescript]": {
-    "editor.formatOnSave": false,
-  },
-  "[typescriptreact]": {
-    "editor.formatOnSave": false,
-  },
+  "cSpell.words": [
+    "sourcemap"
+  ],
+  "cSpell.ignoreWords": [
+    "filesize",
+    "postpublish",
+    "rollupjs",
+    "commitlint",
+    "tsdoc",
+    "typedoc"
+  ],
   "cSpell.ignorePaths": [
-    "**/.git/**",
-    "**/node_modules/**",
     ".history",
     ".vscode",
     "dist",
     "package-lock.json",
     "yarn.lock"
-  ],
-  "cSpell.ignoreWords": [
-  ],
-  "cSpell.words": [
-    "filesize",
-    "rollupjs",
-    "sourcemap"
   ]
 }

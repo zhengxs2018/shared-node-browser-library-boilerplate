@@ -1,4 +1,4 @@
-import { join, dirname, extname, basename } from 'path'
+import { join, dirname, extname, basename, normalize } from 'path'
 
 import nodeResolver from '@rollup/plugin-node-resolve'
 import commonjs from '@rollup/plugin-commonjs'
@@ -7,109 +7,102 @@ import json from '@rollup/plugin-json'
 
 import clear from 'rollup-plugin-clear'
 import progress from 'rollup-plugin-progress'
-import { eslint } from 'rollup-plugin-eslint'
 
 import externals from 'rollup-plugin-node-externals'
 
-import babel from 'rollup-plugin-babel'
+import typescript from 'rollup-plugin-typescript2'
 import { terser } from 'rollup-plugin-terser'
 
 import filesize from 'rollup-plugin-filesize'
 import visualizer from 'rollup-plugin-visualizer'
 
-import toUpper from 'lodash/toUpper'
+import parsePackageName from 'parse-pkg-name'
+
 import snakeCase from 'lodash/snakeCase'
 
 import pkg from './package.json'
 
-const isProd = process.env.NODE_ENV === 'production'
-const analyse = process.env.npm_config_analyse
+const pkgName = parsePackageName(pkg.name).name
 
-const banner = `/**
- * ${pkg.name} v${pkg.version}
- *
- * (c) ${new Date().getFullYear()} ${pkg.author.name}
- *
- * @author ${pkg.author.name}
- * @license ${pkg.license}
- */`
+const formats = {
+  commonjs: {
+    format: 'cjs',
+    file: join(__dirname, pkg.main),
+    exports: 'named'
+  },
+  esm: {
+    format: 'esm',
+    file: join(__dirname, pkg.module),
+    exports: 'named'
+  },
+  umd: {
+    format: 'umd',
+    name: snakeCase(pkgName),
+    exports: 'named',
+    globals: {}
+  }
+}
 
 const config = {
-  input: pkg.module,
-  output: [
-    {
-      banner,
-      file: pkg.main,
-      format: 'cjs',
-      sourcemap: true,
-      exports: 'named'
-    }
-  ],
-  external(resolveId) {
-    return /^lodash/.test(resolveId)
-  },
+  input: './src/index.ts',
+  output: [formats.esm, formats.commonjs],
   plugins: [
-    clear({
-      targets: ['dist', 'bundle-analyzer-report.html']
-    }),
-    progress({
-      clearLine: false
-    }),
-    eslint(),
+    clear({ targets: getCleanPaths() }),
+    progress({ clearLine: false }),
+    externals({ deps: true }),
+    nodeResolver(),
+    commonjs(),
+    json(),
     replace({
+      preventAssignment: true,
       __VERSION__: pkg.version,
       NODE_ENV: JSON.stringify(process.env.NODE_ENV || 'development')
     }),
-    externals({
-      exclude: [/^lodash?/]
-    }),
-    nodeResolver(),
-    commonjs(),
-    babel({
-      externalHelpers: true
-    }),
-    json()
+    typescript({
+      tsconfigOverride: {
+        compilerOptions: { module: 'es2015' }
+      }
+    })
   ],
   watch: {
-    include: 'src/**',
-    exclude: 'node_modules/**'
+    include: 'src/**'
   }
 }
 
-if (analyse) {
+// 生成分析报告
+if (process.env['npm_config_analyze']) {
   config.plugins.push(
     visualizer({
       title: `${pkg.name} - ${pkg.author.name}`,
-      filename: 'bundle-analyzer-report.html'
+      filename: 'dist/bundle-analyzer-report.html'
     })
   )
-} else {
-  const pkgName = pkg.name
-  const umdOutputConfig = {
-    banner,
-    format: 'umd',
-    name: toUpper(snakeCase(basename(pkgName))),
-    sourcemap: true,
-    exports: 'named'
-  }
+}
 
-  const outputFile = pkg.browser
-  const ext = extname(outputFile)
+if (formats.umd) {
+  const cjsFile = formats.commonjs.file
+  const umdFile = basename(cjsFile, extname(cjsFile))
+
   config.output.push({
-    file: join(dirname(outputFile), `${basename(outputFile, ext)}.min${ext}`),
-    plugins: [terser()],
-    ...umdOutputConfig
+    ...formats.umd,
+    file: join(dirname(cjsFile), `${umdFile}.umd.js`),
+    plugins: [filesize()]
   })
 
   config.output.push({
-    file: outputFile,
-    ...umdOutputConfig
+    ...formats.umd,
+    sourcemap: true,
+    file: join(dirname(cjsFile), `${umdFile}.umd.min.js`),
+    plugins: [terser()]
   })
 }
 
-if (isProd) {
-  // 添加统计插件
-  config.plugins.push(filesize())
+function getCleanPaths() {
+  const paths = new Set([
+    normalize(dirname(formats.commonjs.file)),
+    normalize(dirname(formats.esm.file))
+  ])
+  return Array.from(paths).filter((path) => path !== __dirname)
 }
 
 export default config

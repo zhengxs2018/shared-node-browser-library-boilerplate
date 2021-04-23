@@ -1,90 +1,93 @@
 {
-  "name": "shared-node-browser-library-boilerplate",
-  "version": "0.0.0",
+  "name": "@zhengxs/npm-module-boilerplate",
+  "version": "0.1.0",
   "description": "Using rollup.js to build, a re-usable NPM module for run in nodejs and browser.",
-  "main": "dist/lib.commonjs.js",
-  "browser": "dist/lib.umd.js",
-  "module": "src/index.js",
-  "keywords": [
-    "rollup",
-    "rollupjs",
-    "esnext",
-    "nodejs",
-    "browser",
-    "boilerplate"
-  ],
+  "main": "dist/index.js",
+  "module": "dist/index.esm.js",
+  "types": "./dist/index.d.ts",
+  "keywords": [],
   "scripts": {
-    "dev": "cross-env NODE_ENV=development rollup -cw rollup.config.js",
+    "start": "cross-env NODE_ENV=development rollup -cw rollup.config.js",
     "build": "cross-env NODE_ENV=production rollup -c rollup.config.js",
-    "build:docs": "jsdoc -c jsdoc.json",
-    "lint": "concurrently \"npm:lint:*\"",
-    "lint:code": "eslint \"{{src,test}/**/*,*}.js\"",
-    "lint:docs": "eslint *.md --ext md",
+    "lint": "eslint src/**/*.ts",
+    "format": "prettier --write \"**/*.{js,ts}\"",
     "test": "jest",
-    "commit": "git-cz",
+    "cov": "jest --coverage",
+    "ci": "npm run cov",
+    "api": "api-extractor run",
+    "doc": "typedoc --options typedoc.js ./src",
+    "commit": "cz",
+    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md",
     "preversion": "npm run lint && npm test",
-    "postversion": "npm run changelog && git commit -am \"release\" && git push --follow-tags origin master",
-    "prepublishOnly": "npm run build",
-    "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0 && git add CHANGELOG.md"
+    "version": "npm run changelog",
+    "prepublishOnly": "npm run api && npm run build",
+    "postpublish": "git push --follow-tags && gh-pages -d docs -t"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "files": [
-    "src",
     "dist",
     "LICENSE",
     "README.md"
   ],
+  "husky": {
+    "hooks": {
+      "pre-commit": "lint-staged",
+      "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
+    }
+  },
+  "lint-staged": {
+    "*.ts": "eslint --fix"
+  },
   "config": {
     "commitizen": {
       "path": "./node_modules/cz-conventional-changelog"
     }
   },
-  "lint-staged": {
-    "*.js": [
-      "eslint --fix",
-      "git add"
-    ],
-    "*.md": [
-      "eslint --ext md --fix",
-      "git add"
-    ]
-  },
+  "dependencies": {},
   "devDependencies": {
-    "@babel/core": "^7.8.7",
-    "@babel/plugin-external-helpers": "^7.8.3",
-    "@babel/preset-env": "^7.8.7",
-    "@rollup/plugin-commonjs": "^11.0.2",
+    "@microsoft/api-extractor": "^7.14.0",
+    "@rollup/plugin-commonjs": "^18.0.0",
     "@rollup/plugin-json": "^4.0.2",
-    "@rollup/plugin-node-resolve": "^7.1.1",
-    "@rollup/plugin-replace": "^2.3.1",
-    "babel-eslint": "^10.1.0",
-    "babel-plugin-transform-async-to-promises": "^0.8.15",
-    "commitizen": "^4.0.3",
-    "concurrently": "^5.1.0",
-    "conventional-changelog-cli": "^2.0.31",
-    "core-js": "^3.6.4",
-    "cross-env": "^7.0.2",
-    "cz-conventional-changelog": "^3.1.0",
-    "docdash": "^1.2.0",
-    "eslint": "^6.8.0",
-    "eslint-config-prettier": "^6.10.0",
-    "eslint-plugin-markdown": "^1.0.2",
-    "eslint-plugin-prettier": "^3.1.2",
-    "husky": "^4.2.3",
-    "jest": "^25.1.0",
-    "jsdoc": "^3.6.3",
-    "lint-staged": "^10.0.8",
+    "@rollup/plugin-node-resolve": "^11.1.0",
+    "@rollup/plugin-replace": "^2.3.4",
+    "@types/jest": "^26.0.22",
+    "@types/node": "^14.14.41",
+    "@types/power-assert": "^1.5.3",
+    "@typescript-eslint/eslint-plugin": "^4.14.0",
+    "@typescript-eslint/parser": "^4.14.0",
+    "builtin-modules": "^3.2.0",
+    "commitizen": "^4.2.3",
+    "commitlint": "^12.1.1",
+    "conventional-changelog-cli": "^2.1.1",
+    "cross-env": "^7.0.3",
+    "cz-conventional-changelog": "^3.3.0",
+    "eslint": "^7.18.0",
+    "eslint-config-prettier": "^8.2.0",
+    "eslint-plugin-prettier": "^3.3.1",
+    "eslint-plugin-tsdoc": "^0.2.14",
+    "gh-pages": "^3.1.0",
+    "husky": "^6.0.0",
+    "jest": "^26.6.3",
+    "lint-staged": "^10.5.3",
     "lodash": "^4.17.15",
+    "parse-pkg-name": "^2.0.0",
     "power-assert": "^1.6.1",
-    "prettier": "^1.19.1",
-    "rollup": "^2.1.0",
-    "rollup-plugin-babel": "^4.4.0",
+    "prettier": "^2.2.1",
+    "rollup": "^2.37.0",
     "rollup-plugin-clear": "^2.0.7",
     "rollup-plugin-eslint": "^7.0.0",
-    "rollup-plugin-filesize": "^6.2.1",
+    "rollup-plugin-filesize": "^9.1.0",
     "rollup-plugin-node-externals": "^2.1.3",
     "rollup-plugin-progress": "^1.1.1",
-    "rollup-plugin-terser": "^5.3.0",
-    "rollup-plugin-visualizer": "^3.3.2"
+    "rollup-plugin-terser": "^7.0.2",
+    "rollup-plugin-typescript2": "^0.30.0",
+    "rollup-plugin-visualizer": "^5.4.1",
+    "ts-jest": "^26.4.4",
+    "typedoc": "^0.20.36",
+    "typedoc-plugin-nojekyll": "^1.0.1",
+    "typescript": "^4.1.5"
   },
   "engines": {
     "node": ">= 10",
