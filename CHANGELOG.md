@@ -1,4 +1,4 @@
-## [0.1.1](https://github.com/zhengxs2018/shared-node-browser-library-boilerplate/compare/v0.1.6...v0.1.1) (2021-04-23)
+# [0.2.0](https://github.com/zhengxs2018/shared-node-browser-library-boilerplate/compare/v0.1.6...v0.2.0) (2021-04-23)
 
 
 
