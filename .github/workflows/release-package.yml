@@ -20,9 +20,11 @@ jobs:
           path: '**/node_modules'
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
       - name: Install dependencies
-        run: yarn install
-      - name: Run Tests
-        run: yarn test
+        run: yarn --frozen-lockfile
+      - name: Run lint
+        run: yarn lint
+      - name: Run tests
+        run: yarn ci
 
   publish:
     needs: build
@@ -39,7 +41,7 @@ jobs:
           path: '**/node_modules'
           key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
       - name: Install dependencies
-        run: yarn install
+        run: yarn --frozen-lockfile
       - name: Publish to NPM
         run: yarn publish
         env:

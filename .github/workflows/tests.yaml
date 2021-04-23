@@ -1,6 +1,26 @@
 name: Node.js CI
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - main
+      - next
+    paths:
+      - src/**/*
+      - api-extractor.json
+      - package.json
+      - jest.config.js
+  pull_request:
+    branches:
+      - main
+      - dev
+      - 'feat/**'
+      - 'releases/**'
+    paths:
+      - src/**/*
+      - api-extractor.json
+      - jest.config.js
+      - package.json
 
 jobs:
   tests:
@@ -14,14 +34,13 @@ jobs:
       - name: Cache Node.js modules
         uses: actions/cache@v2
         with:
-          path: ~/.npm
-          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-node
-            ${{ runner.OS }}-
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
       - name: Install dependencies
         run: yarn --frozen-lockfile
-      - name: Run Tests
+      - name: Run lint
+        run: yarn lint
+      - name: Run tests
         run: yarn ci
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v1
