@@ -6,19 +6,6 @@
 export type UniqueComparator<T> = (value: T, next: T[], index: number, result: T[]) => boolean
 
 /**
- * 默认唯一性比较函数
- *
- *
- * @param current - 当前比对项
- * @param array - 后续的所有项
- *
- * @returns 判断结果
- */
-function defaultUniqueComparator<T = unknown>(current: T, array: T[]): boolean {
-  return array.indexOf(current) > -1
-}
-
-/**
  * 数组唯一性处理
  *
  * @public
@@ -61,7 +48,7 @@ function defaultUniqueComparator<T = unknown>(current: T, array: T[]): boolean {
  * // -> ['a', 'b', 'c', '', 1, 0]
  * ```
  */
-export function unique<T = unknown>(array: T[], comparator: UniqueComparator<T> = defaultUniqueComparator): T[] {
+export function unique<T = unknown>(array: T[], comparator: UniqueComparator<T> = (v, a) => a.indexOf(v) > -1): T[] {
   return array.reduce((result, value, index) => {
     const flag = comparator(value, array.slice(index + 1), index, result)
     return flag ? result : result.concat(value)
