@@ -16,14 +16,11 @@ jobs:
       - name: Cache Node.js modules
         uses: actions/cache@v2
         with:
-          path: ~/.npm
-          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-node
-            ${{ runner.OS }}-
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
       - name: Install dependencies
-        run: yarn --frozen-lockfile
-      - name: Run Tests
+        run: yarn install
+      - name: Run tests
         run: yarn test
 
   publish:
@@ -38,18 +35,17 @@ jobs:
       - name: Cache Node.js modules
         uses: actions/cache@v2
         with:
-          path: ~/.npm
-          key: ${{ runner.OS }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.OS }}-node
-            ${{ runner.OS }}-
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
       - name: Install dependencies
-        run: yarn --frozen-lockfile
-      - run: npm publish
+        run: yarn install
+      - name: Publish to NPM
+        run: yarn publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - run: npm run doc
-      - name: Deploy gh-pages
+      - name: Generate API Docs
+        run: yarn doc
+      - name: Deploy API Docs
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
