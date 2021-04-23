@@ -1,6 +1,9 @@
 # @zhengxs/npm-module-boilerplate
 
+[![lang](https://img.shields.io/badge/lang-typescript-informational)](https://www.typescriptlang.org/)
 [![code style: prettier](https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square)](https://github.com/prettier/prettier)
+[![codecov](https://codecov.io/gh/zhengxs2018/shared-node-browser-library-boilerplate/branch/main/graph/badge.svg?token=1WYDMOFYX8)](https://codecov.io/gh/zhengxs2018/shared-node-browser-library-boilerplate)
+![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)
 
 
 Using rollup.js to build, a re-usable NPM module for run in nodejs and browser.
