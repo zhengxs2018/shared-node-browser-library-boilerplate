@@ -1,6 +1,6 @@
 {
   "name": "@zhengxs2018/npm-module-boilerplate",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Using rollup.js to build, a re-usable NPM module for run in nodejs and browser.",
   "main": "dist/index.js",
   "module": "dist/index.esm.js",
