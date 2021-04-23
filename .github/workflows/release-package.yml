@@ -1,0 +1,94 @@
+name: Node.js Package
+
+on:
+  push:
+    branches:
+      - next
+      - beta
+    paths:
+      - "src/**/*"
+      - package.json
+  pull_request:
+    branches:
+      - main
+    paths:
+      - "src/**/*"
+      - package.json
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Install Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 10.x
+      - name: Cache Node.js modules
+        uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+      - name: Run lint
+        run: yarn lint
+      - name: Run tests
+        run: yarn ci
+
+  publish:
+    needs: build
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 12
+          registry-url: https://npm.pkg.github.com/
+      - name: Cache Node.js modules
+        uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+      - name: Install dependencies
+        run: yarn --frozen-lockfile
+      - name: Publish to NPM
+        if: ${{ github.ref == 'refs/heads/main' }}
+        run: yarn publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish to NPM --dist-tag=next
+        if: ${{ github.ref == 'refs/heads/next' }}
+        run: yarn publish --tag=next
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Publish to NPM --dist-tag=beta
+        if: ${{ github.ref == 'refs/heads/beta' }}
+        run: yarn publish --tag=beta
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  docs:
+    if: ${{ github.ref == 'refs/heads/main' }}
+    needs: publish
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: 12
+          registry-url: https://npm.pkg.github.com/
+      - name: Cache Node.js modules
+        uses: actions/cache@v2
+        with:
+          path: '**/node_modules'
+          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
+      - name: Install dependencies
+        run: yarn install
+      - name: Generate API Docs
+        run: yarn doc
+      - name: Deploy API Docs
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          publish_dir: ./docs

@@ -1,27 +1,17 @@
-'use strict'
-
 module.exports = {
   root: true,
   env: {
-    es6: true,
     node: true,
     browser: true
   },
-  extends: ["eslint:recommended", "plugin:prettier/recommended"],
-  plugins: [
-    'markdown'
-  ],
+  plugins: ['@typescript-eslint/eslint-plugin', 'eslint-plugin-tsdoc'],
+  extends: ['plugin:@typescript-eslint/recommended', 'prettier'],
   rules: {
-    'no-console': process.env.NODE_ENV === 'production' ? 'error' : 'off',
-    'no-debugger': process.env.NODE_ENV === 'production' ? 'error' : 'off'
+    'tsdoc/syntax': 'warn'
   },
-  parser: 'babel-eslint',
+  parser: '@typescript-eslint/parser',
   parserOptions: {
-    ecmaVersion: 9,
-    sourceType: 'module',
-    ecmaFeatures: {
-      generators: false,
-      objectLiteralDuplicateProperties: false
-    }
+    ecmaVersion: 2019,
+    sourceType: 'module'
   }
 }
