@@ -1,0 +1,26 @@
+name: Node.js Package
+
+on:
+  push:
+    branches:
+      - release-v1
+      - test
+    paths:
+      - "src/**/*"
+      - "!src/**/*.spec.ts"
+      - package.json
+  pull_request:
+    branches:
+      - release-v1
+      - test
+    paths:
+      - "src/**/*"
+      - "!src/**/*.spec.ts"
+      - package.json
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - run: echo ${{ github.ref }}
