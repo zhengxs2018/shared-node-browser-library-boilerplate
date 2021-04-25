@@ -16,7 +16,7 @@ Using rollup.js to build, a re-usable NPM module for run in nodejs and browser.
 
 ## 其他分支
 
-- `branch:typescript` - ts 开发模板
+- `branch:esm` - 最初的 rollup + babel + es6 模板
 
 ## Features
 
