@@ -10,13 +10,6 @@ on:
       - "src/**/*"
       - "!src/**/*.spec.ts"
       - package.json
-  pull_request:
-    branches:
-      - main
-    paths:
-      - "src/**/*"
-      - "!src/**/*.spec.ts"
-      - package.json
 
 jobs:
   publish:

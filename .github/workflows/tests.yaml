@@ -11,16 +11,6 @@ on:
       - api-extractor.json
       - package.json
       - jest.config.js
-  pull_request:
-    branches-ignore:
-      - main
-      - beta
-      - next
-    paths:
-      - src/**/*
-      - api-extractor.json
-      - package.json
-      - jest.config.js
 
 jobs:
   tests:
