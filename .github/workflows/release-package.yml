@@ -3,6 +3,7 @@ name: Node.js Package
 on:
   push:
     branches:
+      - main
       - next
       - beta
     paths:
@@ -14,88 +15,60 @@ on:
       - main
     paths:
       - "src/**/*"
+      - "!src/**/*.spec.ts"
       - package.json
 
 jobs:
-  build:
+  publish:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
-      - name: Install Node.js
+      - name: 安装 Node.js
         uses: actions/setup-node@v2
         with:
-          node-version: 10.x
-      - name: Cache Node.js modules
-        uses: actions/cache@v2
+          node-version: '10.x'
+      - name: 获取 yarn 缓存目录地址
+        id: yarn-cache-dir-path
+        run: echo "::set-output name=dir::$(yarn cache dir)"
+      - uses: actions/cache@v2
+        id: yarn-cache
         with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-      - name: Install dependencies
+          path: ${{ steps.yarn-cache-dir-path.outputs.dir }}
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-yarn-
+      - name: 安装依赖
         run: yarn --frozen-lockfile
-      - name: Run lint
+      - name: 运行代码检查
         run: yarn lint
-      - name: Run tests
+      - name: 运行单元测试
         run: yarn ci
-      - name: Upload coverage to Codecov
+      - name: 上传测试覆盖率报告
         if: ${{ github.ref == 'refs/heads/main' }}
         uses: codecov/codecov-action@v1
         with:
           verbose: true
           fail_ci_if_error: true
           token: ${{ secrets.CODECOV_TOKEN }}
-
-  publish:
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 12
-          registry-url: https://npm.pkg.github.com/
-      - name: Cache Node.js modules
-        uses: actions/cache@v2
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-      - name: Install dependencies
-        run: yarn --frozen-lockfile
-      - name: Publish to NPM
+      - name: 发布正式版
         if: ${{ github.ref == 'refs/heads/main' }}
         run: yarn publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Publish to NPM --dist-tag=next
+      - name: 发布预览版
         if: ${{ github.ref == 'refs/heads/next' }}
         run: yarn publish --tag=next
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      - name: Publish to NPM --dist-tag=beta
+      - name: 发布测试版
         if: ${{ github.ref == 'refs/heads/beta' }}
         run: yarn publish --tag=beta
         env:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-  docs:
-    if: ${{ github.ref == 'refs/heads/main' }}
-    needs: publish
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v2
-        with:
-          node-version: 12
-          registry-url: https://npm.pkg.github.com/
-      - name: Cache Node.js modules
-        uses: actions/cache@v2
-        with:
-          path: '**/node_modules'
-          key: ${{ runner.os }}-modules-${{ hashFiles('**/yarn.lock') }}
-      - name: Install dependencies
-        run: yarn install
-      - name: Generate API Docs
+      - name: 生成 API 文档
+        if: ${{ github.ref == 'refs/heads/main' }}
         run: yarn doc
-      - name: Deploy API Docs
+      - name: 部署文档到 Github Pages 上
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
