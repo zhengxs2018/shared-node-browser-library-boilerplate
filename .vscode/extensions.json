@@ -3,7 +3,6 @@
     "eamodio.gitlens",
     "xyz.local-history",
     "streetsidesoftware.code-spell-checker",
-    "christian-kohler.npm-intellisense",
     "axetroy.vscode-npm-import-package-version"
   ]
 }

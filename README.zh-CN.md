@@ -24,10 +24,10 @@ $ npm install
 $ npm run build
 
 # 构建用于生产的代码并生成包分析报告
-$ npm run build --analyze
+$ npm run analyse
 
 # 生成文档
-$ npm run doc
+$ npm run ts-doc
 ```
 
 在 package.json 文件的 scripts 部分还有一些其他脚本可用.

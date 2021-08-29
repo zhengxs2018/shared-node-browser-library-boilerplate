@@ -1,56 +1,45 @@
-/**
- * 比较函数
- *
- * @public
- */
-export type UniqueComparator<T> = (value: T, next: T[], index: number, result: T[]) => boolean
+/** 比较函数 */
+export type UniqueCompare<T> = (value: T, array: T[]) => boolean
 
 /**
  * 数组唯一性处理
  *
  * @public
- *
- * @param array  - 需要操作的数组
- * @param comparator - 默认使用 [].indexOf 进行比较处理
- * @returns            处理结果
+ * @param array    - 需要操作的数组
+ * @param compare  - 默认使用 Array#indexOf 进行比较处理
+ * @param reverse  - 是否逆转结果，用于获取重复的值
+ * @returns 处理结果
  *
  * @example <caption> 基础使用 </caption>
  *
- * ```typescript
- * import { unique } from '@zhengxs/npm-module-boilerplate'
- *
- * // 获取去重结果
+ * ```js
  * unique(['a', 'b', 'c', '1', 0, 'c', 1, '', 1, 0])
- * // -> ['a', 'b', '1', 'c', '', 1, 0]
+ * // ['a', 'b', '1', 'c', '', 1, 0]
  * ```
  *
  * <br/>
  *
  * @example <caption> 使用自定义函数进行比较 </caption>
  *
- * ```typescript
- * import { unique } from '@zhengxs/npm-module-boilerplate'
- *
+ * ```js
  * const values = ['a', 'b', 'c', '1', 0, 'c', 1, '', 1, 0]
  *
- * function isNumber(value: unknown): value is number {
- *   return typeof value === 'number' || typeof value === 'string' && /^\d+$/.test(value)
- * }
+ * const compare = (v, rValue) => {
+ *   const s = (v || '').toString()
+ *   const k = /^\d+$/.test(s)
  *
- * function comparator<T = unknown>(current: T, array: T[]): boolean {
- *   return array.some(value => {
- *     return isNumber(value) && isNumber(current) ? Number(value) === Number(current) : value === current
+ *   return rValue.some(rv => {
+ *     return k ? (rv || '').toString() === s : rv === v
  *   })
  * }
  *
- * // 获取去重结果
- * unique(values, comparator)
- * // -> ['a', 'b', 'c', '', 1, 0]
+ * unique(values, compare)
+ * // ['a', 'b', 'c', '', 1, 0]
  * ```
  */
-export function unique<T = unknown>(array: T[], comparator: UniqueComparator<T> = (v, a) => a.indexOf(v) > -1): T[] {
-  return array.reduce((result, value, index) => {
-    const flag = comparator(value, array.slice(index + 1), index, result)
-    return flag ? result : result.concat(value)
-  }, [] as T[])
+export function unique<T>(
+  array: T[],
+  compare: UniqueCompare<T> = (v, a) => a.indexOf(v) > -1,
+): T[] {
+  return array.filter((value, i) => compare!(value, array.slice(i + 1)))
 }

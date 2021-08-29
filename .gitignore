@@ -1,17 +1,19 @@
 .DS_Store
 
-node_modules
+.history/
+.idea/
+.eslintcache
 
-coverage
+node_modules/
+
+coverage/
+
+dist/
+dist-tsdoc/
+types/
+temp/
 
 # Log files
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
-
-.idea
-.history/
-
-dist/
-docs/
-temp/

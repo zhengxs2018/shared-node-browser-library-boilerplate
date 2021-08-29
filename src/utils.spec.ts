@@ -1,9 +1,5 @@
-import { strictEqual } from 'power-assert'
-
 import { sum } from './utils'
 
-describe('test utils.js', function () {
-  it('Should output 3', function () {
-    strictEqual(sum(1, 2), 3, '合计结果与预期不符')
-  })
+it('sum(1, 2) => 3', function () {
+  expect(sum(1, 2)).toEqual(3)
 })

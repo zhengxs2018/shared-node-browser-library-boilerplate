@@ -1,37 +1,29 @@
 {
-  "$schema": "http://json.schemastore.org/tsconfig",
   /* Visit https://aka.ms/tsconfig.json to read more about this file */
   "compilerOptions": {
     /* Basic Options */
-    "target": "ES2015",
-    "module": "CommonJS",
-    "declaration": true,
-    "declarationMap": true, // 给 api-extractor 用的
+    "target": "es2017",
+    "module": "commonjs",
 
     /* Strict Type-Checking Options */
     "strict": true,
-    "strictNullChecks": true,
+    "strictBindCallApply": true,
 
     /* Additional Checks */
     "noUnusedLocals": true,
     "noUnusedParameters": true,
+    "noImplicitAny": true,
+    "noImplicitThis": true,
     "noFallthroughCasesInSwitch": true,
-    "noUncheckedIndexedAccess": true,
-    "noPropertyAccessFromIndexSignature": true,
 
     /* Module Resolution Options */
     "moduleResolution": "node",
     "esModuleInterop": true,
+    "resolveJsonModule": true,
 
     /* Advanced Options */
     "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true
   },
-  "include": [
-    "src/**/*"
-  ],
-  "exclude": [
-    "**/*.test.ts",
-    "**/*.spec.ts"
-  ]
+  "include": ["src/**/*"]
 }

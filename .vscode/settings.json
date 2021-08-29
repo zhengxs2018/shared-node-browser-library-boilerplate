@@ -1,6 +1,5 @@
 {
   "telemetry.enableCrashReporter": false,
-  "telemetry.enableTelemetry": false,
   "search.followSymlinks": false,
   "search.exclude": {
     "**/.history": true,
@@ -20,10 +19,19 @@
     "**/dist/**": true,
     "**/docs/**": true
   },
+  "files.associations": {
+    "api-extractor.json": "jsonc"
+  },
   "editor.minimap.enabled": false,
   "cSpell.words": [
     "codecov",
-    "sourcemap"
+    "newname",
+    "postbuild",
+    "preanalyse",
+    "prebuild",
+    "sourcemap",
+    "parens",
+    "pobedit"
   ],
   "cSpell.ignoreWords": [
     "filesize",

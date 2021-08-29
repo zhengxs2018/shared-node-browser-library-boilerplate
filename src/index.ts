@@ -2,5 +2,5 @@ export * from './array'
 export * from './utils'
 
 export default {
-  version: '__VERSION__'
+  version: '__VERSION__',
 }

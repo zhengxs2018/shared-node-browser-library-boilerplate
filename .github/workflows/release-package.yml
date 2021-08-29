@@ -60,9 +60,9 @@ jobs:
           NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: 生成 API 文档
         if: ${{ github.ref == 'refs/heads/main' }}
-        run: yarn doc
+        run: yarn ts-doc
       - name: 部署文档到 Github Pages 上
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./docs
+          publish_dir: ./dist-tsdoc

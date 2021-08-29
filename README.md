@@ -5,14 +5,13 @@
 [![codecov](https://codecov.io/gh/zhengxs2018/shared-node-browser-library-boilerplate/branch/main/graph/badge.svg?token=1WYDMOFYX8)](https://codecov.io/gh/zhengxs2018/shared-node-browser-library-boilerplate)
 ![License](https://img.shields.io/badge/license-MIT-brightgreen.svg)
 
-
 Using rollup.js to build, a re-usable NPM module for run in nodejs and browser.
 
 查看[中文文档](./README.zh-CN.md)
 
 ## 关联文章
 
-* [开发一个适用于 nodejs 与浏览器的 npm 包 - 基于 rollupjs](https://juejin.im/post/6844903834402160647)
+- [开发一个适用于 nodejs 与浏览器的 npm 包 - 基于 rollupjs](https://juejin.im/post/6844903834402160647)
 
 ## 其他分支
 
@@ -38,10 +37,10 @@ $ npm install
 $ npm run build
 
 # build for production and generate the bundle analyzer report
-$ npm run build --analyze
+$ npm run analyse
 
 # Generate document.
-$ npm run doc
+$ npm run ts-doc
 ```
 
 There are some other scripts available in the scripts section of the package.json file.

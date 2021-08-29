@@ -3,11 +3,13 @@
 
 const pkg = require('./package.json')
 
+/**
+ * @type {import('@jest/types/build/Config').ProjectConfig}
+ */
 module.exports = {
   name: pkg.name,
   preset: 'ts-jest',
   coverageDirectory: 'coverage',
-  coverageReporters: ['html', 'lcov', 'text'],
   testEnvironment: 'node',
-  moduleFileExtensions: ['ts', 'js', 'json']
+  testPathIgnorePatterns: ['node_modules', 'cypress'],
 }

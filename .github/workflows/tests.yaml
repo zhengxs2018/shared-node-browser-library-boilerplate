@@ -40,4 +40,4 @@ jobs:
       - name: 检查 API 导出情况
         run: |
           yarn build
-          yarn api
+          yarn ts-check
